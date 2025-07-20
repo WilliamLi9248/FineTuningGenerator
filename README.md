@@ -1,169 +1,171 @@
-# FitTracker - iOS Fitness App
+# Fine-Tuning Training Data Generator
 
-A comprehensive fitness tracking app for iOS built with SwiftUI that helps users monitor their exercise, diet, and health goals.
+A comprehensive Python tool for generating training datasets for various Large Language Model (LLM) fine-tuning platforms. This utility supports multiple commercial and open-source providers, offering flexible content generation options and standardized output formats.
 
-## Features
+## Overview
 
-### 🏃‍♂️ Exercise Tracking
-- Add exercises with calorie burn calculations based on user weight
-- Choose from 16+ predefined exercise templates
-- Create custom exercises with manual calorie input
-- Track exercise duration and type
-- View exercise history and weekly progress
-- Visual progress charts
+The Fine-Tuning Training Data Generator creates structured conversation datasets tailored to specific use cases. It supports nine different output formats and six content generation methods, making it suitable for both research and production environments.
 
-### 🥗 Diet Management
-- Track food intake with detailed nutritional information
-- Search from comprehensive food database (30+ foods)
-- Browse foods by category (fruits, vegetables, proteins, etc.)
-- View macro-nutrients (protein, carbs, fat, fiber)
-- Meal suggestions for breakfast, lunch, dinner, and snacks
-- Water intake tracking with visual indicators
+## Supported Platforms
 
-### 👤 User Profile & Health Stats
-- Complete user onboarding with personal information
-- BMI calculation and health category assessment
-- BMR (Basal Metabolic Rate) calculation
-- Daily calorie needs based on activity level
-- Health recommendations based on BMI
-- Goal setting and progress tracking
+### Commercial Cloud Providers
+- **OpenAI** - GPT-3.5/4 fine-tuning with messages format
+- **Claude (Amazon Bedrock)** - Claude 3 fine-tuning with system/messages structure
+- **Gemini (Vertex AI)** - Google Cloud fine-tuning with input/output pairs
+- **Hugging Face** - Open-source model fine-tuning with flexible formatting
 
-### 📊 Dashboard & Analytics
-- Daily calorie balance visualization
-- Circular progress indicators
-- Weekly exercise and nutrition statistics
-- Recent activity overview
-- Quick action buttons for common tasks
+### Local and Open Source Models
+- **Llama** - Meta's Llama 2/3 with chat template format
+- **Alpaca** - Stanford Alpaca instruction-following format
+- **ShareGPT** - Conversational dataset format for multi-turn dialogue
+- **DeepSeek** - Reasoning-enhanced format for DeepSeek models
+- **Unsloth** - Memory-optimized format for efficient training
 
-## Technical Architecture
+## Content Generation Options
 
-### Models
-- **User**: Complete user profile with health calculations
-- **Exercise**: Exercise tracking with calorie burn algorithms
-- **Food**: Comprehensive food database with nutritional data
-- **FoodEntry**: Individual food consumption tracking
+The tool provides multiple methods for generating training content:
 
-### Managers
-- **UserManager**: User authentication and profile management
-- **ExerciseManager**: Exercise tracking and statistics
-- **DietManager**: Food tracking and meal suggestions
+1. **Demo Mode** - Pre-built expert responses with high consistency
+2. **Ollama** - Local LLM instance for unlimited free generation
+3. **OpenAI API** - GPT-3.5-turbo for professional-quality content
+4. **Claude API** - Anthropic's Claude 3 Haiku for thoughtful responses
+5. **Hugging Face API** - Free tier access to various models
+6. **Groq API** - High-speed inference for rapid dataset creation
 
-### Views
-- **Dashboard**: Main overview with progress tracking
-- **ExerciseView**: Exercise logging and history
-- **DietView**: Food tracking and meal management
-- **ProfileView**: User profile and settings
+## Installation
 
-## Getting Started
+Install the required dependencies:
 
-### Prerequisites
-- iOS 15.0+
-- Xcode 13.0+
-- Swift 5.5+
+```bash
+pip install -r requirements.txt
+```
 
-### Installation
-1. Open the project in Xcode
-2. Select your target device or simulator
-3. Build and run the project
+For local generation with Ollama:
 
-### First Launch
-1. Complete the onboarding process:
-   - Enter your name, height, weight, age
-   - Select your gender
-   - Choose your activity level
-2. Set your daily calorie goal
-3. Start tracking your exercises and meals
+```bash
+# Install Ollama
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# Download a model
+ollama pull llama3.1:8b
+
+# Start the service
+ollama serve
+```
 
 ## Usage
 
-### Adding Exercises
-1. Go to the Exercise tab
-2. Tap the "+" button
-3. Choose from:
-   - **Quick Add**: Select from predefined exercises
-   - **Custom**: Create your own exercise
-4. Enter duration and tap "Add Exercise"
+### Interactive Mode
 
-### Tracking Food
-1. Go to the Diet tab
-2. Tap the "+" button
-3. Select meal type (breakfast, lunch, dinner, snack)
-4. Choose from:
-   - **Search**: Find specific foods
-   - **Browse**: Browse by category
-   - **Suggestions**: Pre-made meal suggestions
-5. Enter amount and tap "Add Food"
+Run the tool in interactive mode for guided setup:
 
-### Water Tracking
-- Use the water tracker in the Diet tab
-- Quick add buttons for common amounts (250ml, 500ml, 1L)
-- Visual progress with water glass indicators
+```bash
+python fine_tuning_generator.py --interactive
+```
 
-### Viewing Progress
-- Dashboard shows daily overview
-- Exercise tab shows weekly progress charts
-- Profile tab displays health statistics
+This mode provides step-by-step configuration including:
+- Target platform selection
+- Task description input
+- Number of examples specification
+- Content generation method choice
+- Output file naming
 
-## Food Database
+### Command Line Interface
 
-The app includes a comprehensive food database with:
-- **Fruits**: Apple, Banana, Orange, Berries, etc.
-- **Vegetables**: Broccoli, Spinach, Carrots, etc.
-- **Proteins**: Chicken, Fish, Eggs, Tofu, etc.
-- **Grains**: Rice, Quinoa, Oats, Bread, etc.
-- **Dairy**: Milk, Cheese, Yogurt, etc.
-- **Nuts & Seeds**: Almonds, Walnuts, etc.
+Generate datasets directly from the command line:
 
-Each food item includes:
-- Calories per 100g
-- Protein content
-- Carbohydrates
-- Fat content
-- Fiber
-- Sugar
-- Sodium
+```bash
+python fine_tuning_generator.py --provider openai --task "customer service chatbot" --examples 100 --llm demo
+```
 
-## Exercise Templates
+### API Key Configuration
 
-Predefined exercises include:
-- Walking, Running, Cycling
-- Swimming, Weightlifting, Yoga
-- Dancing, Hiking, Sports
-- And more with accurate calorie calculations
+For commercial APIs, set environment variables:
 
-## Health Calculations
+```bash
+export OPENAI_API_KEY="your_openai_key"
+export ANTHROPIC_API_KEY="your_claude_key"
+export GROQ_API_KEY="your_groq_key"
+export HUGGINGFACE_API_KEY="your_hf_token"
+```
 
-### BMI (Body Mass Index)
-- Weight (kg) / Height (m)²
-- Categories: Underweight, Normal, Overweight, Obese
+## Command Line Arguments
 
-### BMR (Basal Metabolic Rate)
-- Uses Mifflin-St Jeor Equation
-- Accounts for gender, age, weight, height
+- `--provider` - Target platform (openai, claude, gemini, huggingface, llama, alpaca, sharegpt, deepseek, unsloth)
+- `--task` - Description of the fine-tuning objective
+- `--examples` - Number of training examples to generate (default: 10)
+- `--output` - Custom output filename (optional)
+- `--llm` - Content generation method (demo, ollama, openai, claude, huggingface, groq)
+- `--interactive` - Launch interactive configuration mode
 
-### Daily Calorie Needs
-- BMR × Activity Level Multiplier
-- Activity levels from sedentary to extra active
+## Output Format Examples
 
-## Data Persistence
+### OpenAI Format
+```json
+{"messages": [{"role": "system", "content": "You are a helpful assistant."}, {"role": "user", "content": "How can I help you today?"}, {"role": "assistant", "content": "I'm here to assist with any questions you have."}]}
+```
 
-- All data is stored locally using UserDefaults
-- User profile, exercises, and food entries are preserved
-- No network connection required
+### Alpaca Format
+```json
+{"instruction": "Solve this equation: 2x + 5 = 15", "input": "", "output": "To solve 2x + 5 = 15, subtract 5 from both sides to get 2x = 10, then divide by 2 to get x = 5."}
+```
 
-## Future Enhancements
+### ShareGPT Format
+```json
+{"id": "sharegpt_001", "conversations": [{"from": "human", "value": "Explain quantum computing"}, {"from": "gpt", "value": "Quantum computing uses quantum mechanical phenomena..."}]}
+```
 
-- Integration with HealthKit
-- Social features and challenges
-- More detailed analytics
-- Barcode scanning for foods
-- Custom meal planning
-- Export data functionality
+## Use Cases
 
-## Contributing
+### Customer Service Training
+Generate realistic customer support conversations with varied scenarios including order issues, returns, account problems, and billing inquiries.
 
-This is a sample fitness app demonstrating SwiftUI best practices. Feel free to extend and customize based on your needs.
+### Code Review Assistant
+Create datasets for programming assistance with code optimization, debugging, security reviews, and best practices guidance.
+
+### Educational Content
+Develop training data for tutoring systems covering mathematics, programming concepts, and technical explanations.
+
+### Specialized Domains
+Generate domain-specific conversations for robotics, healthcare, finance, or other specialized fields requiring expert knowledge.
+
+## Quality Considerations
+
+- **Context Awareness** - Responses are generated based on task-specific context and domain knowledge
+- **Variability** - Multiple system prompt variations and response patterns prevent repetitive training data
+- **Relevance** - Content matches the specified use case with appropriate technical depth
+- **Consistency** - Maintains professional tone and accurate information across examples
+
+## Technical Requirements
+
+- Python 3.7 or higher
+- Internet connection for API-based generation
+- Optional: Local Ollama installation for free unlimited generation
+- Optional: API keys for commercial services
+
+## File Formats
+
+All outputs are generated in JSONL (JSON Lines) format, with each line containing a complete training example. This format is widely supported across fine-tuning platforms and can be easily processed by training pipelines.
+
+## Performance Guidelines
+
+- **Demo Mode** - Instant generation, suitable for rapid prototyping
+- **Ollama** - Local processing, no API limits, requires adequate hardware
+- **Commercial APIs** - High quality but usage costs, rate limiting may apply
+- **Batch Processing** - Recommended for large datasets (100+ examples)
+
+## Error Handling
+
+The tool includes comprehensive error handling with automatic fallback to demo mode when:
+- API keys are missing or invalid
+- Network connectivity issues occur
+- Service rate limits are exceeded
+- Local services (Ollama) are unavailable
 
 ## License
 
-This project is for educational purposes and demonstrates iOS app development with SwiftUI. 
+This project is released under the MIT License, allowing free use and modification for both personal and commercial applications.
+
+## Support
+
+For technical issues, feature requests, or contributions, please refer to the project documentation or contact the development team.
